@@ -1,2 +1,0 @@
-Gdoc :
-https://drive.google.com/drive/folders/1fZjN5heUh32MIZb1YtgcefTwuf53Ul_t?usp=drive_link
