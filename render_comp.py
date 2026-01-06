@@ -19,9 +19,7 @@ def render_comp(im_group1, im_group2):
         diff = comp_2_img(im1, im2)
         total_diff.append(diff)
 
-    mean_diff = mean_diff(total_diff)
-
-    return mean_diff
+    return mean_diff(total_diff)
 
 
 def comp_2_img(im1, im2):
@@ -41,17 +39,21 @@ def comp_2_img(im1, im2):
     
     diff = dict()
 
-    # Compute the Mean Squared Error (MSE) between the two images
-    mse = np.mean((im1.astype("float") - im2.astype("float")) ** 2)
-    diff['mse'] = mse
+    # Compute Normalize Mean Absolute Error (NMAE)
+    nmae = np.mean(np.abs(im1.astype("float") - im2.astype("float"))) / 255.0
+    diff['NMAE'] = nmae
 
-    # Compute ZNCC (Zero-mean Normalized Cross-Correlation)
+    # Compute the Normalize Mean Squared Error (MSE)
+    nmse = np.mean((im1.astype("float") - im2.astype("float")) ** 2) / (255.0 ** 2)
+    diff['NMSE'] = nmse
+    
+    # Compute Zero-mean Normalized Cross-Correlation (ZNCC)
     im1_mean = im1.astype("float") - np.mean(im1.astype("float"))
     im2_mean = im2.astype("float") - np.mean(im2.astype("float"))
     numerator = np.sum(im1_mean * im2_mean)
     denominator = np.sqrt(np.sum(im1_mean ** 2) * np.sum(im2_mean ** 2))
     zncc = numerator / denominator if denominator != 0 else 0
-    diff['zncc'] = zncc
+    diff['ZNCC'] = zncc
 
     return diff
 
@@ -84,3 +86,13 @@ def mean_diff(diff_list):
         mean_diff[key] /= num_diffs
 
     return mean_diff
+
+def print_comp(diff):
+    """
+    Print the difference metrics in a formatted way.
+    Args:
+        diff: Dictionary containing difference metrics.
+    """
+    print("Difference Metrics:")
+    for key, value in diff.items():
+        print(f"{key}: {value:.3f}")
