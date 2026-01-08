@@ -87,6 +87,7 @@ def mean_diff(diff_list):
 
     return mean_diff
 
+
 def print_comp(diff):
     """
     Print the difference metrics in a formatted way.
