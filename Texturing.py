@@ -1,6 +1,7 @@
 import bpy
 import os
 import math
+import mathutils
 
 
 # ===============================
@@ -19,6 +20,8 @@ IMAGE_DIR = os.path.join(BASE_DIR, "images", "patatoide_textures")
 BAKE_DIR = os.path.join(BASE_DIR, "baked")
 
 TEXTURE_RES = 4096
+
+SEUIL_ANGLE = 0.95
 
 os.makedirs(BAKE_DIR, exist_ok=True)
 
@@ -113,33 +116,8 @@ bpy.ops.object.mode_set(mode='OBJECT')
 
 
 # ===============================
-# MATÉRIAU + TEXTURE
+# TEXTURE
 # ===============================
-
-mat = bpy.data.materials.new("ProjectionMaterial")
-mat.use_nodes = True
-nodes = mat.node_tree.nodes
-links = mat.node_tree.links
-nodes.clear()
-
-# Les nœuds pour le shadeur
-tex_node = nodes.new("ShaderNodeTexImage")
-bsdf = nodes.new("ShaderNodeBsdfPrincipled")
-output = nodes.new("ShaderNodeOutputMaterial")
-uv_map_node = nodes.new("ShaderNodeUVMap")
-
-uv_map_node.location = (-400, 0)
-tex_node.location = (-200, 0)
-bsdf.location = (100, 0)
-output.location = (400, 0)
-
-# Paramétrage du nœud UV Map pour utiliser notre UV créée
-uv_map_node.uv_map = uv_layer_name
-
-# Connexion : UV Map -> Texture -> BSDF -> Output
-links.new(uv_map_node.outputs["UV"], tex_node.inputs["Vector"])
-links.new(tex_node.outputs["Color"], bsdf.inputs["Base Color"])
-links.new(bsdf.outputs["BSDF"], output.inputs["Surface"])
 
 image_files = [
     f for f in os.listdir(IMAGE_DIR)
@@ -151,8 +129,75 @@ if not image_files:
 image_name = image_files[0]
 
 img_path = os.path.join(IMAGE_DIR, image_name)
+
+
+# ===============================
+# MATÉRIAU
+# ===============================
+
+mat = bpy.data.materials.new("ProjectionMaterial")
+mat.use_nodes = True
+nodes = mat.node_tree.nodes
+links = mat.node_tree.links
+nodes.clear()
+
+# Les nœuds pour le shadeur
+uv_map_node = nodes.new("ShaderNodeUVMap")
+uv_map_node.location = (-400, 0)
+uv_map_node.uv_map = uv_layer_name
+
+tex_node = nodes.new("ShaderNodeTexImage")
+tex_node.location = (-200, 0)
 tex_node.image = bpy.data.images.load(img_path)
 
+bsdf = nodes.new("ShaderNodeBsdfPrincipled")
+bsdf.location = (100, 0)
+
+bsdf_black = nodes.new("ShaderNodeBsdfPrincipled")
+bsdf_black.location = (100, -400)
+bsdf_black.inputs["Base Color"].default_value = (0, 0, 0, 1)
+
+mix_shader = nodes.new("ShaderNodeMixShader")
+mix_shader.location = (400, 0)
+
+geometry = nodes.new("ShaderNodeNewGeometry")
+geometry.location = (-400, 300)
+
+dot = nodes.new("ShaderNodeVectorMath")
+dot.operation = 'DOT_PRODUCT'
+dot.location = (0, 300)
+
+cam_vec_node = nodes.new("ShaderNodeCombineXYZ")
+cam_norm = mathutils.Vector(CAM_LOCATION).normalized()
+cam_vec_node.inputs[0].default_value = cam_norm[0]
+cam_vec_node.inputs[1].default_value = cam_norm[1]
+cam_vec_node.inputs[2].default_value = cam_norm[2]
+cam_vec_node.location = (-200, 200)
+
+greater_than = nodes.new("ShaderNodeMath")
+greater_than.operation = 'GREATER_THAN'
+greater_than.inputs[1].default_value = SEUIL_ANGLE
+greater_than.location = (200, 300)
+
+output = nodes.new("ShaderNodeOutputMaterial")
+output.location = (600, 0)
+
+# Connexion : UV Map -> Texture -> BSDF
+links.new(uv_map_node.outputs["UV"], tex_node.inputs["Vector"])
+links.new(tex_node.outputs["Color"], bsdf.inputs["Base Color"])
+
+# Connexion du masque caméra
+links.new(geometry.outputs["Normal"], dot.inputs[0])
+links.new(cam_vec_node.outputs[0], dot.inputs[1])
+links.new(dot.outputs["Value"], greater_than.inputs[0])
+links.new(greater_than.outputs[0], mix_shader.inputs["Fac"])
+
+# Mix visible / invisible
+links.new(bsdf.outputs["BSDF"], mix_shader.inputs[2])
+links.new(bsdf_black.outputs["BSDF"], mix_shader.inputs[1])
+links.new(mix_shader.outputs["Shader"], output.inputs["Surface"])
+
+# Appliquer le matériau
 obj.data.materials.clear()
 obj.data.materials.append(mat)
 
@@ -177,7 +222,7 @@ bake_img = bpy.data.images.new(
 # Créer un nœud TexImage qui va recevoir le bake
 bake_tex_node = nodes.new("ShaderNodeTexImage")
 bake_tex_node.image = bake_img
-bake_tex_node.location = (-200, -300)
+bake_tex_node.location = (800, 0)
 bake_tex_node.select = True
 nodes.active = bake_tex_node
 
