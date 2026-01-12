@@ -17,7 +17,7 @@ BASE_DIR = os.path.join(
 
 OBJ_DIR = os.path.join(BASE_DIR, "model")
 IMAGE_DIR = os.path.join(BASE_DIR, "images", "patatoide_textures")
-BAKE_DIR = os.path.join(BASE_DIR, "baked")
+BAKE_DIR = os.path.join(BASE_DIR, "images", "patatoide_baked")
 
 TEXTURE_RES = 4096
 
