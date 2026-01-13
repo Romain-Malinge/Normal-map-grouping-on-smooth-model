@@ -228,6 +228,16 @@ nodes.active = bake_tex_node
 
 # Paramètres Blender pour le bake
 bpy.context.scene.render.engine = 'CYCLES'
+
+prefs = bpy.context.preferences
+cycles_prefs = prefs.addons["cycles"].preferences
+
+cycles_prefs.compute_device_type = 'CUDA'
+cycles_prefs.get_devices()
+
+for d in cycles_prefs.devices:
+    d.use = True
+
 bpy.context.scene.cycles.device = 'GPU'
 
 # Lancer le bake (diffuse color seulement)
