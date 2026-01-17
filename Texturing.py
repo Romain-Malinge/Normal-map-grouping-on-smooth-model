@@ -1,6 +1,7 @@
 import bpy
 import os
 import math
+import json
 import mathutils
 
 
@@ -10,32 +11,47 @@ import mathutils
 
 TEXTURE_RES = 2048
 
-SEUIL_PROJECTION = 0.9
-
+SEUIL_PROJECTION = 0.8
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
     "Documents", "Github", "Normal-map-grouping-on-smooth-model"
 )
+
 obj_path = os.path.join(base_dir, "model", "Patatoide_lisse.obj")
-bake_dir = os.path.join(base_dir, "images", "patatoide_baked")
+json_path = os.path.join(base_dir, "images-blender", "camera_pos_degrees.json")
+bake_dir = os.path.join(base_dir, "images-blender", "baked")
 
-img_path1 = os.path.join(base_dir, "images", "patatoide_textures", "cam_00_rot_-100_led_19_reshape.png")
-cam_loc_1 = (0, 0, -2)     # mettres
-cam_rot_1 = (180, 0, -68)  # degrés
-pos1 = (obj_path, img_path1, bake_dir, cam_loc_1, cam_rot_1)
+with open(json_path, "r") as f:
+    camera_data = json.load(f)
 
-img_path2 = os.path.join(base_dir, "images", "patatoide_textures", "cam_05_rot_-140_led_19_reshape.png")
-cam_loc_2 = (0, 0, 2)     # mettres
-cam_rot_2 = (0, 0, 112)   # degrés
-pos2 = (obj_path, img_path2, bake_dir, cam_loc_2, cam_rot_2)
+positions = []
 
-positions = [pos1, pos2]
+for entry in camera_data:
+    cam_loc = (
+        entry["position"]["x"],
+        entry["position"]["y"],
+        entry["position"]["z"]
+    )
+    cam_rot = (
+        entry["rotation_degrees"]["x"],
+        entry["rotation_degrees"]["y"],
+        entry["rotation_degrees"]["z"]
+    )
+    img_path = os.path.join(
+        base_dir,
+        "images-blender",
+        "reshaped",
+        f"normal_{entry['id']}_reshaped.png"
+    )
+
+    pos = (obj_path, img_path, bake_dir, cam_loc, cam_rot)
+    positions.append(pos)
 
 
 # ========================================================================
 # Boucle de texturing
-for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
+for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions[:3]:
 
 
     # ===============================
