@@ -1,0 +1,142 @@
+[
+    {
+        "id": 0,
+        "image_normal": "normals/normal_0.png",
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0
+        },
+        "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+        }
+    },
+    {
+        "id": 1,
+        "image_normal": "normals/normal_1.png",
+        "position": {
+            "x": -0.463465,
+            "y": 0.424572,
+            "z": 0.777778
+        },
+        "rotation_degrees": {
+            "x": 38.94,
+            "y": 0.0,
+            "z": 227.51
+        }
+    },
+    {
+        "id": 2,
+        "image_normal": "normals/normal_2.png",
+        "position": {
+            "x": 0.072693,
+            "y": -0.828296,
+            "z": 0.555556
+        },
+        "rotation_degrees": {
+            "x": 56.25,
+            "y": 0.0,
+            "z": 5.02
+        }
+    },
+    {
+        "id": 3,
+        "image_normal": "normals/normal_3.png",
+        "position": {
+            "x": 0.573642,
+            "y": 0.748214,
+            "z": 0.333333
+        },
+        "rotation_degrees": {
+            "x": 70.53,
+            "y": 0.0,
+            "z": 142.52
+        }
+    },
+    {
+        "id": 4,
+        "image_normal": "normals/normal_4.png",
+        "position": {
+            "x": -0.978616,
+            "y": -0.173103,
+            "z": 0.111111
+        },
+        "rotation_degrees": {
+            "x": 83.62,
+            "y": 0.0,
+            "z": -79.97
+        }
+    },
+    {
+        "id": 5,
+        "image_normal": "normals/normal_5.png",
+        "position": {
+            "x": 0.838531,
+            "y": -0.533405,
+            "z": -0.111111
+        },
+        "rotation_degrees": {
+            "x": 96.38,
+            "y": 0.0,
+            "z": 57.54
+        }
+    },
+    {
+        "id": 6,
+        "image_normal": "normals/normal_6.png",
+        "position": {
+            "x": -0.244757,
+            "y": 0.910485,
+            "z": -0.333333
+        },
+        "rotation_degrees": {
+            "x": 109.47,
+            "y": 0.0,
+            "z": 195.05
+        }
+    },
+    {
+        "id": 7,
+        "image_normal": "normals/normal_7.png",
+        "position": {
+            "x": -0.383235,
+            "y": -0.737895,
+            "z": -0.555556
+        },
+        "rotation_degrees": {
+            "x": 123.75,
+            "y": 0.0,
+            "z": -27.45
+        }
+    },
+    {
+        "id": 8,
+        "image_normal": "normals/normal_8.png",
+        "position": {
+            "x": 0.5904,
+            "y": 0.215613,
+            "z": -0.777778
+        },
+        "rotation_degrees": {
+            "x": 141.06,
+            "y": 0.0,
+            "z": 110.06
+        }
+    },
+    {
+        "id": 9,
+        "image_normal": "normals/normal_9.png",
+        "position": {
+            "x": -0.0,
+            "y": 0.0,
+            "z": -1.0
+        },
+        "rotation_degrees": {
+            "x": 180.0,
+            "y": 0.0,
+            "z": 270.0
+        }
+    }
+]
