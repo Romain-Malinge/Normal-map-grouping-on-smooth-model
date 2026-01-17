@@ -6,7 +6,7 @@ import mathutils
 import glob
 
 # ================== PARAMÈTRES ==================
-N = 10
+N = 100
 RADIUS = 1.0
 
 MAIN_PATH = bpy.path.abspath("//")

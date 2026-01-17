@@ -11,7 +11,7 @@ import mathutils
 
 TEXTURE_RES = 2048
 
-SEUIL_PROJECTION = 0.8
+SEUIL_PROJECTION = 0.9
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
@@ -34,9 +34,9 @@ for entry in camera_data:
         entry["position"]["z"]
     )
     cam_rot = (
-        entry["rotation_degrees"]["x"],
-        entry["rotation_degrees"]["y"],
-        entry["rotation_degrees"]["z"]
+        entry["rotation_euler_deg"]["x"],
+        entry["rotation_euler_deg"]["y"],
+        entry["rotation_euler_deg"]["z"]
     )
     img_path = os.path.join(
         base_dir,
@@ -51,7 +51,7 @@ for entry in camera_data:
 
 # ========================================================================
 # Boucle de texturing
-for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions[:3]:
+for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
 
 
     # ===============================
