@@ -3,7 +3,7 @@ import math
 import os
 
 N = 10
-RADIUS = 1.0
+RADIUS = 1.0 
 OUTPUT_FILE = "camera_pos_degrees.json"
 
 def generate_camera_data(n, radius):
@@ -11,11 +11,7 @@ def generate_camera_data(n, radius):
     golden_angle = math.pi * (3 - math.sqrt(5))
 
     for i in range(n):
-        if n > 1:
-            z_ratio = 1 - (i / float(n - 1)) * 2
-        else:
-            z_ratio = 1.0
-            
+        z_ratio = 1 - (i / float(n - 1)) * 2 if n > 1 else 1.0
         r_at_z = math.sqrt(max(0.0, 1 - z_ratio * z_ratio))
         theta = golden_angle * i
         
@@ -23,11 +19,18 @@ def generate_camera_data(n, radius):
         pos_y = math.sin(theta) * r_at_z * radius
         pos_z = z_ratio * radius
         
-        rot_z_rad = math.atan2(pos_y, pos_x) + (math.pi / 2)
-        
         dist_xy = math.sqrt(pos_x**2 + pos_y**2)
         rot_x_rad = math.atan2(dist_xy, pos_z)
         
+        if dist_xy < 1e-6:
+            rot_z_rad = 0.0 
+        else:
+            rot_z_rad = math.atan2(pos_y, pos_x) + (math.pi / 2)
+            if rot_z_rad > math.pi: rot_z_rad -= 2 * math.pi
+            
+        if i == 0 and dist_xy < 1e-6:
+            rot_z_rad = 0.0
+
         camera_log.append({
             "id": i,
             "image_normal": f"normals/normal_{i}.png",
@@ -46,8 +49,7 @@ def generate_camera_data(n, radius):
     return camera_log
 
 data = generate_camera_data(N, RADIUS)
-
 with open(OUTPUT_FILE, 'w') as f:
     json.dump(data, f, indent=4)
 
-print(f"Succès ! Le fichier '{OUTPUT_FILE}' a été généré avec {N} poses.")
+print(f"Fichier généré.")
