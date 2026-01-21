@@ -11,7 +11,7 @@ import mathutils
 
 TEXTURE_RES = 2048
 
-SEUIL_PROJECTION = 0.9
+SEUIL_PROJECTION = 0.7
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
