@@ -11,7 +11,7 @@ import mathutils
 
 TEXTURE_RES = 2048
 
-SEUIL_PROJECTION = 0.9
+SEUIL_PROJECTION = 0.75
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
@@ -139,7 +139,7 @@ for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
 
     bpy.ops.object.mode_set(mode='OBJECT')
     
-
+    
     # ===============================
     # MATÉRIAU
     # ===============================
