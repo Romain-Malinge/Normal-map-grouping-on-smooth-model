@@ -13,7 +13,7 @@ TEXTURE_RES = 2048
 
 SEUIL_PROJECTION = 0.5
 
-ORIGINE = "blender" # blender ou unity
+ORIGINE = "unity" # blender ou unity
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
