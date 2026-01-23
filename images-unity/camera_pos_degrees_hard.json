@@ -1,0 +1,86 @@
+[
+    {
+        "id": 0,
+        "image_normal": "normals/normal_0.png",
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.5
+        },
+        "rotation_euler_deg": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 180.0
+        }
+    },
+    {
+        "id": 1,
+        "image_normal": "normals/normal_1.png",
+        "position": {
+            "x": 0.5,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotation_euler_deg": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 90.0
+        }
+    },
+    {
+        "id": 2,
+        "image_normal": "normals/normal_2.png",
+        "position": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+        },
+        "rotation_euler_deg": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 180.0
+        }
+    },
+    {
+        "id": 3,
+        "image_normal": "normals/normal_3.png",
+        "position": {
+            "x": 0.0,
+            "y": -0.5,
+            "z": 0.0
+        },
+        "rotation_euler_deg": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    {
+        "id": 4,
+        "image_normal": "normals/normal_4.png",
+        "position": {
+            "x": -0.5,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotation_euler_deg": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 270.0
+        }
+    },
+    {
+        "id": 5,
+        "image_normal": "normals/normal_5.png",
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -0.5
+        },
+        "rotation_euler_deg": {
+            "x": 180.0,
+            "y": 0.0,
+            "z": 180.0
+        }
+    }
+]
