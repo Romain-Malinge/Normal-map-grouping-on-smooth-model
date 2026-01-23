@@ -6,7 +6,7 @@ import mathutils
 import glob
 
 # ================== PARAMÈTRES ==================
-N = 50
+N = 3
 RADIUS = 1.0
 
 MAIN_PATH = bpy.path.abspath("//")
@@ -33,6 +33,11 @@ def clear_scene():
         bpy.data.cameras.remove(block)
     for block in bpy.data.lights:
         bpy.data.lights.remove(block)
+        
+    for obj in bpy.data.objects:
+        if obj.type == 'LIGHT':
+            bpy.data.objects.remove(obj, do_unlink=True)
+
 
 def import_obj(path):
     path = os.path.abspath(path)
@@ -89,8 +94,32 @@ def run_synthetic_data_gen():
     import_obj(OBJ_PATH)
     cam = add_camera()
 
-    # ================== GPU / CUDA ==================
+    
     scene = bpy.context.scene
+    
+    scene = bpy.context.scene
+
+    # ================== WORLD NOIR SANS LUMIÈRE ==================
+    if scene.world is None:
+        scene.world = bpy.data.worlds.new("BlackWorld")
+
+    scene.world.use_nodes = True
+    world_nodes = scene.world.node_tree.nodes
+    world_links = scene.world.node_tree.links
+
+    world_nodes.clear()
+
+    bg = world_nodes.new("ShaderNodeBackground")
+    bg.inputs["Color"].default_value = (0, 0, 0, 1)
+    bg.inputs["Strength"].default_value = 0.0
+
+    out = world_nodes.new("ShaderNodeOutputWorld")
+    world_links.new(bg.outputs["Background"], out.inputs["Surface"])
+    
+    bpy.context.scene.render.film_transparent = True
+
+    
+    # ================== GPU / CUDA ==================
     scene.render.engine = 'CYCLES'
 
     prefs = bpy.context.preferences
