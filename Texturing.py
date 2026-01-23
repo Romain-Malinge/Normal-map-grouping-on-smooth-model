@@ -11,7 +11,9 @@ import mathutils
 
 TEXTURE_RES = 2048
 
-SEUIL_PROJECTION = 0.7
+SEUIL_PROJECTION = 0.5
+
+ORIGINE = "blender" # blender ou unity
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
@@ -19,8 +21,8 @@ base_dir = os.path.join(
 )
 
 obj_path = os.path.join(base_dir, "model", "Patatoide_lisse.obj")
-json_path = os.path.join(base_dir, "images-blender", "camera_pos_degrees.json")
-bake_dir = os.path.join(base_dir, "images-blender", "baked")
+json_path = os.path.join(base_dir, "images-" + ORIGINE, "camera_pos_degrees.json")
+bake_dir = os.path.join(base_dir, "images-" + ORIGINE, "baked")
 
 with open(json_path, "r") as f:
     camera_data = json.load(f)
@@ -40,7 +42,7 @@ for entry in camera_data:
     )
     img_path = os.path.join(
         base_dir,
-        "images-blender",
+        "images-" + ORIGINE,
         "reshaped",
         f"normal_{entry['id']}_reshaped.png"
     )
@@ -210,7 +212,7 @@ for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
     obj.data.materials.clear()
     obj.data.materials.append(mat)
 
-
+    assert False
     # ===============================
     # BAKE SUR L'UV ORIGINALE
     # ===============================
