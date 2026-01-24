@@ -11,9 +11,9 @@ import mathutils
 
 TEXTURE_RES = 2048
 
-SEUIL_PROJECTION = 0.5
+SEUIL_PROJECTION = 0.8
 
-ORIGINE = "unity" # blender ou unity
+ORIGINE = "blender" # blender ou unity
 
 base_dir = os.path.join(
     os.path.expanduser("~"),
@@ -250,7 +250,7 @@ for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
 
     for d in cycles_prefs.devices:
         d.use = True
-
+    
     bpy.context.scene.cycles.device = 'GPU'
 
     # Lancer le bake (diffuse color seulement)

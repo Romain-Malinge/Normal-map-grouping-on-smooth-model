@@ -6,7 +6,7 @@ import mathutils
 import glob
 
 # ================== PARAMÈTRES ==================
-N = 3
+N = 20
 RADIUS = 1.0
 
 MAIN_PATH = bpy.path.abspath("//")
@@ -14,7 +14,7 @@ MAIN_PATH = bpy.path.abspath("//")
 BASE_PATH = os.path.join(MAIN_PATH, "images-blender")
 os.makedirs(BASE_PATH, exist_ok=True)
 
-OBJ_PATH = os.path.join(MAIN_PATH, "model", "Patatoide_details.obj")
+OBJ_PATH = os.path.join(MAIN_PATH, "model", "patatoide_details.obj")
 
 JSON_NAME = "camera_pos_degrees.json"
 NORM_DIR = os.path.join(BASE_PATH, "normals")
