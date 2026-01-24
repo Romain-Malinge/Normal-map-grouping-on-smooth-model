@@ -22,6 +22,8 @@ base_dir = os.path.join(
 
 obj_path = os.path.join(base_dir, "model", "Patatoide_lisse.obj")
 json_path = os.path.join(base_dir, "images-" + ORIGINE, "camera_pos_degrees.json")
+if ORIGINE == "unity":
+    json_path = os.path.join(base_dir, "images-" + ORIGINE, "camera_pos_degrees_hard.json")
 bake_dir = os.path.join(base_dir, "images-" + ORIGINE, "baked")
 
 with open(json_path, "r") as f:
@@ -78,7 +80,7 @@ for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
     obj = bpy.context.selected_objects[0]
     obj.name = "obj_to_bake"
     scene.view_layers[0].objects.active = obj
-
+    
 
     # ===============================
     # CAMÉRA
@@ -212,7 +214,7 @@ for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
     obj.data.materials.clear()
     obj.data.materials.append(mat)
 
-    assert False
+    
     # ===============================
     # BAKE SUR L'UV ORIGINALE
     # ===============================
