@@ -20,7 +20,7 @@ base_dir = os.path.join(
     "Documents", "Github", "Normal-map-grouping-on-smooth-model"
 )
 
-obj_path = os.path.join(base_dir, "model", "Patatoide_lisse.obj")
+obj_path = os.path.join(base_dir, "model", "donut_super_lisse.obj")
 json_path = os.path.join(base_dir, "images-" + ORIGINE, "camera_pos_degrees.json")
 if ORIGINE == "unity":
     json_path = os.path.join(base_dir, "images-" + ORIGINE, "camera_pos_degrees_hard.json")
@@ -218,6 +218,7 @@ for OBJ_PATH, IMG_PATH, BAKE_DIR, CAM_LOCATION, CAM_ROTATION in positions:
     # ===============================
     # BAKE SUR L'UV ORIGINALE
     # ===============================
+    
 
     # Activer la UV “originale” (celle de l'OBJ)
     original_uv_name = "UVMap"  # remplace par le nom de l'UV de ton OBJ si différent
